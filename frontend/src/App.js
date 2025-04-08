@@ -6,8 +6,6 @@ import ImageCard from "./components/imageCard";
 import { Container, Row, Col } from "react-bootstrap";
 import Welcome from "./components/welcome";
 
-// const UNSPLASH_KEY = process.env.REACT_APP_UNSPLASH_KEY;
-
 const API_URL = process.env.REACT_APP_API_URL || window.location.origin;
 
 const App = () => {

@@ -1,23 +1,30 @@
+import logging
 import os
 from flask import Flask, request, send_from_directory
 from flask_cors import CORS
 from requests import get
 from dotenv import load_dotenv
 
-
 load_dotenv()
-UNSPLASH_KEY = os.environ.get("UNSPLASH_KEY", "")
+UNSPLASH_KEY_LOCAL = os.environ.get("UNSPLASH_KEY", "")
 UNSPLASH_URL = "https://api.unsplash.com/photos/random"
 DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
-if not UNSPLASH_KEY:
-    raise EnvironmentError("UNSPLASH_KEY environment variable is not set")
+# Fetch key from Databricks secrets
+def get_key_from_secrets():
+    try:
+        import dbutils
+        return dbutils.secrets.get(scope="image-search-app", key="unsplash_key")
+    except Exception as e:
+        logging.error(f"Error fetching key from Databricks secrets: {e}")
+        return None
+
+
+UNSPLASH_KEY = get_key_from_secrets() or UNSPLASH_KEY_LOCAL
 
 
 app = Flask(__name__, static_url_path='', static_folder="public")
 CORS(app)
-
-app.config["DEBUG"] = True # Set to True for development phase
 
 @app.route("/")
 def serve():
