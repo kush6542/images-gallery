@@ -1,0 +1,12 @@
+command: [
+  "flask",
+  "--app",
+  "api.app.py",
+  "run"
+]
+
+env:
+  - name: "UNSPLASH_KEY"
+    value: ""
+  - name: "DEBUG"
+    value: "False"

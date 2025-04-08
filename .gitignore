@@ -4,3 +4,15 @@
 .env.development.local
 .env.test.local
 .env.production.local
+
+.databricks
+.databricksignore
+api/.venv
+api/.env
+.databricks
+.idea
+.vscode
+__pycache__
+api/__pycache__
+frontend/.env.development
+frontend/.env.production
